@@ -1,0 +1,72 @@
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.cacheDirectory = exports.documentDirectory = undefined;
+exports.getInfoAsync = getInfoAsync;
+exports.readAsStringAsync = readAsStringAsync;
+exports.writeAsStringAsync = writeAsStringAsync;
+exports.deleteAsync = deleteAsync;
+exports.moveAsync = moveAsync;
+exports.copyAsync = copyAsync;
+exports.makeDirectoryAsync = makeDirectoryAsync;
+exports.readDirectoryAsync = readDirectoryAsync;
+exports.downloadAsync = downloadAsync;
+
+var _reactNative = require('react-native');
+
+var FS = _reactNative.NativeModules.ExponentFileSystem;
+
+
+var normalizeEndingSlash = function normalizeEndingSlash(p) {
+  return p.replace(/\/*$/, '') + '/';
+};
+
+FS.documentDirectory = normalizeEndingSlash(FS.documentDirectory);
+FS.cacheDirectory = normalizeEndingSlash(FS.cacheDirectory);
+
+var documentDirectory = exports.documentDirectory = FS.documentDirectory;
+var cacheDirectory = exports.cacheDirectory = FS.cacheDirectory;
+
+function getInfoAsync(fileUri) {
+  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+  return FS.getInfoAsync(fileUri, options);
+}
+
+function readAsStringAsync(fileUri) {
+  return FS.readAsStringAsync(fileUri, {});
+}
+
+function writeAsStringAsync(fileUri, contents) {
+  return FS.writeAsStringAsync(fileUri, contents, {});
+}
+
+function deleteAsync(fileUri) {
+  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+  return FS.deleteAsync(fileUri, options);
+}
+
+function moveAsync(options) {
+  return FS.moveAsync(options);
+}
+
+function copyAsync(options) {
+  return FS.copyAsync(options);
+}
+
+function makeDirectoryAsync(fileUri) {
+  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+  return FS.makeDirectoryAsync(fileUri, options);
+}
+
+function readDirectoryAsync(fileUri) {
+  return FS.readDirectoryAsync(fileUri, {});
+}
+
+function downloadAsync(uri, fileUri) {
+  var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+
+  return FS.downloadAsync(uri, fileUri, options);
+}
